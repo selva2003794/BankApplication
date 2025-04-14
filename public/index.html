@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SK Bank</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icon.png">
+</head>
+
+<body>
+    <div id="mainpopup">
+        <div id="popup">
+            <form id="popupForm">
+                <table>
+                    <tbody>
+                        <tr>
+                            <label id="tableHead"></label><br><br>
+                        </tr>
+                        <tr id="transferRow">
+                            <td><label>AccounterName:</label></td><td><input type="text" id="TransferAccName" required></td>
+                        </tr>
+                        <tr id="transferRow2">
+                            <td><label>AccounterNo:</label></td><td><input type="number" id="TransferAccNo" required>
+                        </tr>
+                        <tr id="withdrawRow">
+                            <td><label id="tableLabel">WithdrawAmt:</label></td><td id="historyrow"><div id="historyDiv"></div></td><td><h2 id="balance"></h2></td><td><input type="number" id="AmountInput" required></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </form>
+            <button class="Btn" id="historyGet">Get</button>
+            <button class="Btn" id="save" type="submit">Save</button>
+            <button class="Btn" id="cancel">Cancel</button>
+        </div>
+    </div>
+    <div id="container">
+        <div id="message">
+            <h1 id="messageBox">Please Collect your Cash</h1>
+        </div>
+            
+        <h1 id="heading">Welcome to SK Bank</h1>
+        <hr>
+        <p id="para">Manage your bank accounts easily and securely.</p>
+        <div id="content">
+            <div id="createAccount">
+                <h2 id="CAH">Create a Account</h2>
+                <form id="createAccountForm">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="accountName">AccounterName:</label></td>
+                                <td><input type="text" id="accountName" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="AccountNo">AccountNo:</label></td>
+                                <td><input type="number" id="AccountNo" required min="6" ></td>
+                            </tr>
+                            <tr>
+                                <td><button id="submit">Create Account</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Have a Account Already?<a id="LOGIN">Login</a></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </form>
+            </div>
+            <div id="loginAccount">
+                <h2 id="LTA">Login to Account</h2>
+                <form id="loginAccountForm">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="loginAccountName">Accounter Name :</label></td>
+                                <td><input type="text" id="loginAccountName" required ></td>
+                            </tr>
+                            <tr>
+                                <td><label for="loginAccNo">AccountNo :</label></td>
+                                <td><input type="number" id="loginAccNo" required min="6" ></td>
+                            </tr>
+                            <tr>
+                                <td><button id="loginSubmit">Login</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Create a New Account.<a id="NewAccount">New</a></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
