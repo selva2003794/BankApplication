@@ -122,15 +122,18 @@ router.put('/:accountNumber', async (req, res) => {
 });
 
 // Delete a customer by ID (DELETE)
-router.delete('/:id', async (req, res) => {
+router.delete('/:accountNo', async (req, res) => {
+    const { accountNo } = req.params;
     try {
-        const deletedCustomer = await BankCustomer.findByIdAndDelete(req.params.id);
-        if (!deletedCustomer) {
-            return res.status(404).json({ message: 'Customer not found' });
+        console.log("DELETE request received for accountNo:", accountNo);
+        const result = await BankCustomer.deleteOne({ accountNumber: accountNo });
+        if (result.deletedCount === 0) {
+            return res.status(404).send({ message: "Account not found" });
         }
-        res.status(200).json({ message: 'Customer deleted successfully' });
+        res.status(200).send({ message: "Account deleted successfully" });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error("Error deleting account:", error);
+        res.status(500).send({ message: "Internal server error" });
     }
 });
 
