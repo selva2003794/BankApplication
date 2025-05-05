@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SK Bank</title>
+    <title>Bank</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="icon.png">
 </head>
@@ -74,9 +74,13 @@
                                 <td>
                                     <p>Have a Account Already?<a id="LOGIN">Login</a></p>
                                 </td>
+<<<<<<< HEAD
                                 <td>
                                     <p>Login in<br><a id="admin">Admin</a></p>
                                 </td>
+=======
+                                <td>admin. <br><a id="adminpageOpenForNewAcc">Admin</a></td>
+>>>>>>> e5a34d0a26a2324af703f972bb9d2d6e92029464
                             </tr>
                         </tbody>
                     </table>
@@ -103,14 +107,47 @@
                                 <td>
                                     <p>Create a New Account.<a id="NewAccount">New</a></p>
                                 </td>
+<<<<<<< HEAD
                                 <td>
                                     <p>Login in<br><a id="admin" onclick="adminOpen()">Admin</a></p>
                                 </td>
+=======
+                                <td><p>admin. <br><a id="adminpageOpenForLogin">Admin</a></p></td>
+>>>>>>> e5a34d0a26a2324af703f972bb9d2d6e92029464
                             </tr>
                         </tbody>
                     </table>
 
                 </form>
+                 <div id="adminPage">
+                <h2 id="APH">Admin</h2>
+                <form id="AdminPageForm">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="AdminName">Admin Name:</label></td>
+                                <td><input type="text" id="AdminName" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="AdminNo">Password:</label></td>
+                                <td><input type="number" id="AdminNo" required min="4"></td>
+                            </tr>
+                            <tr>
+                                <td><button id="AdminSubmit">Login</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Create a New<br> Account.<a id="NewAccountInAdmin">New</a></p>
+                                </td>
+
+                                <td><p>Have a Account<br> Already?<a id="LOGINinAdmin">Login</a></p></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </form>
+
             </div>
             <div id="adminLogin">
                 <h2 id="ALH">Admin Login</h2>
@@ -135,6 +172,39 @@
                 </form>
 
             </div>
+
+            </div>
+            <div id="adminPage">
+                <h2 id="APH">Admin</h2>
+                <form id="AdminPageForm">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="AdminName">Admin Name:</label></td>
+                                <td><input type="text" id="AdminName" required></td>
+                            </tr>
+                            <tr>
+                                <td><label for="AdminNo">Password:</label></td>
+                                <td><input type="number" id="AdminNo" required min="4"></td>
+                            </tr>
+                            <tr>
+                                <td><button id="AdminSubmit">Login</button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Create a New<br> Account.<a id="NewAccountInAdmin">New</a></p>
+                                </td>
+
+                                <td><p>Have a Account<br> Already?<a id="LOGINinAdmin">Login</a></p></td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </form>
+
+            </div>
+
 
         </div>
         <div id="adminPage">

@@ -1,15 +1,49 @@
 const CreateAccount = document.getElementById("createAccount");
 const loginAccount = document.getElementById("loginAccount");
 const popupForm = document.getElementById("popupForm");
+const adminPage = document.getElementById("adminPage");
+
+const apiUrl = "http://127.0.0.1:5500/api/customers";
 
 document.getElementById("LOGIN").onclick = () => {
     loginAccount.style.display = "block";
     CreateAccount.style.display = "none";
 }
+document.getElementById("NewAccountInAdmin").onclick = () => {
+    loginAccount.style.display = "none";
+    CreateAccount.style.display = "block";
+    adminPage.style.display = "none";
+}
+
+document.getElementById("AdminPageForm").onclick = (e) => {
+    e.preventDefault();
+}
+
 
 document.getElementById("NewAccount").onclick = () => {
     loginAccount.style.display = "none";
     CreateAccount.style.display = "block";
+}
+
+document.getElementById("LOGINinAdmin").onclick = () => {
+    loginAccount.style.display = "block";
+    CreateAccount.style.display = "none";
+    adminPage.style.display = "none";
+}
+
+
+document.getElementById("adminpageOpenForNewAcc").onclick = () => {
+    console.log("hello");
+    loginAccount.style.display = "none";
+    CreateAccount.style.display = "none";
+    adminPage.style.display = "block";
+}
+
+document.getElementById("adminpageOpenForLogin").onclick = () => {
+    console.log("hello");
+    loginAccount.style.display = "none";
+    CreateAccount.style.display = "none";
+    adminPage.style.display = "block";
 }
 
 const createAccBtn = document.getElementById("submit");
@@ -48,8 +82,13 @@ loginSubmit.onclick = (e) => {
             <h1 id="transfer">Transfer</h1>
             <h1 id="CheckBalance">Check Balance</h1>
             <h1 id="history">Transaction History</h1>
+            <h1 id="LogOut">LogOut</h1>
         </div>
     </div>`;
+            document.getElementById("LogOut").onclick = () => {
+                location.reload();
+            }
+
             document.getElementById("nameTag").innerHTML = `Account Holder ${accountName.value}`;
             document.getElementById("para").style.display = "block";
 
@@ -217,6 +256,7 @@ let TransactionHistory = [];
 const getHistory = document.getElementById("historyGet");
 const HistoryDiv = document.getElementById("historyDiv");
 let repeat = true;
+
 getHistory.onclick = async () => {
     if (repeat) {
         repeat = false;
@@ -281,6 +321,80 @@ async function TransferAmount(TransferAccName, TransferAccNo, TransferAmt, accou
             document.getElementById("message").style.display = "none";
         }, 2000);
     }
+}
+
+document.getElementById("AdminSubmit").onclick = async (e) => {
+
+    const adminName = "Admin";
+    const adminAccNo = 1234;
+    if (adminName == document.getElementById("AdminName").value.trim() && adminAccNo == document.getElementById("AdminNo").value.trim()) {
+        
+        content.innerHTML =
+            `
+        <div id="adminMainPage">
+        <h2 id="adminHeading">Accounts</h2>
+        <div id="AllAccounts">
+
+        </div>
+    </div>
+    `;
+    await getCustomers();
+    console.log(Customers);
+    e.preventDefault();
+    for (let i = 0; i < Customers.length; i++) {
+        const customer = Customers[i];
+        //console.log(customer.name, customer.accountNumber, customer.balance);
+        const accountDiv = document.createElement("div");
+        accountDiv.classList.add("account");
+        accountDiv.innerHTML = `
+            <label class="label">Name:</label>
+            <h2 id="Name">${customer.name}</h2><br>
+            <label class="label">Account No:</label>
+            <h2 id="AccNo">${customer.accountNumber}</h2><br>
+            <label class="label">Balance:</label>
+            <h2 id="Balance">${customer.balance}</h2><br>
+            <button id="DeleteBtn" onclick="deleteFunction(event)">Delete</button>
+        `;
+        const allAccountsDiv = document.getElementById("AllAccounts");
+        allAccountsDiv.appendChild(accountDiv);
+    }
+    }
+    else {
+        document.getElementById("message").style.display = "block";
+        document.getElementById("messageBox").textContent = "Invalid Admin Credentials";
+        document.getElementById("message").style.backgroundColor = "red";
+        setTimeout(() => {
+            document.getElementById("message").style.display = "none";
+            document.getElementById("message").style.backgroundColor = "rgb(0, 255, 17)";
+
+        }, 2000);
+    }
+}
+
+const deleteFunction = async (event) => {
+
+    event.preventDefault();
+    const accounterName = event.target.parentElement.querySelector("#Name").textContent;
+    var accountNo = event.target.parentElement.querySelector("#AccNo").textContent;
+    //console.log(accounterName, accountNo);
+    accountNo = String(accountNo);
+
+    //const accountName = accountDiv.querySelector("#Name").textContent;
+    //const accountNo = accountDiv.querySelector("#AccNo").textContent;
+    console.log(accounterName, accountNo);
+    await fetch(`${apiUrl}/${accountNo}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    event.target.parentElement.remove();
+    document.getElementById("message").style.display = "block";
+    document.getElementById("messageBox").textContent = "Account Deleted Successfully";
+    document.getElementById("message").style.backgroundColor = "rgb(0, 255, 17)";
+    setTimeout(() => {
+        document.getElementById("message").style.display = "none";
+    }, 2000);
 }
 
 createAccBtn.onclick = async (e) => {
@@ -608,7 +722,7 @@ document.getElementById("adminSubmit").onclick = (e) => {
 // getCustomers(); // GET
 
 // Base API URL
-const apiUrl = "/api/customers"; // Replace with your actual backend API URL
+//const apiUrl = "/api/customers"; // Replace with your actual backend API URL
 
 // POST Function: Create a new customer
 async function createCustomer(customerData) {
@@ -681,7 +795,7 @@ async function getCustomers() {
 
 // GET Function: Retrieve a single customer by account number
 async function getCustomer(accountNumber) {
-    console.log(accountNumber);
+    //console.log(accountNumber);
     try {
         response = await fetch(`${apiUrl}/${accountNumber}`, {
             method: "GET",
