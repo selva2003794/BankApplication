@@ -540,7 +540,59 @@ createAccBtn.onclick = async (e) => {
     }
 }
 
+const adminLogin = document.getElementById("adminLogin");
+//const loginAccount = document.getElementById("loginAccount");
+document.getElementById("Adback").onclick = () => {
+    adminLogin.style.display = "none";
+    loginAccount.style.display = "block";
+}
+const adminOpenBtn = document.getElementById("admin");
+console.log(adminOpenBtn);
+const adminName = document.getElementById("adminName");
+const adminPass = document.getElementById("adminPassword");
 
+const adminOpen = () => {
+    console.log("hello");
+    adminLogin.style.display = "block";
+    loginAccount.style.display = "none";
+    const adminName = document.getElementById("adminName");
+    const adminPass = document.getElementById("adminPassword");
+    const adminSubmit = document.getElementById("adminSubmit");
+    adminSubmit.onclick = (e) => {
+        e.preventDefault();
+        if (adminName.value == "admin" && adminPass.value == "12345") {
+            //console.log("hello");
+            adminLogin.style.display = "none";
+            document.getElementById("adminPage").style.display = "block";
+            
+
+        }
+        else {
+            document.getElementById("message").style.display = "block";
+            document.getElementById("messageBox").textContent = "Invalid Credentials";
+            document.getElementById("message").style.backgroundColor = "red";
+            setTimeout(() => {
+                document.getElementById("message").style.display = "none";
+                document.getElementById("message").style.backgroundColor = "rgb(0, 255, 17)";
+
+            }, 2000);
+        }
+    }
+}
+
+document.getElementById("adminLoginForm").onclick = (e) => {
+    e.preventDefault();
+    
+}
+
+document.getElementById("adminSubmit").onclick = (e) => {
+    if(adminAccNo.value == "adminName" && adminAccPass.value == "admin") 
+    e.preventDefault();
+    getCustomers();
+    console.log(Customers);
+
+
+}
 // Example usage
 
 
