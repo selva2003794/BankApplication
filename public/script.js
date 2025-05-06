@@ -2,6 +2,7 @@ const CreateAccount = document.getElementById("createAccount");
 const loginAccount = document.getElementById("loginAccount");
 const popupForm = document.getElementById("popupForm");
 const adminPage = document.getElementById("adminPage");
+//console.log(adminPage);
 
 const apiUrl = "http://127.0.0.1:5500/api/customers";
 
@@ -248,8 +249,6 @@ loginSubmit.onclick = (e) => {
 
         }, 2000);
     }
-
-
 }
 
 let TransactionHistory = [];
@@ -330,7 +329,7 @@ document.getElementById("AdminSubmit").onclick = async (e) => {
     if (adminName == document.getElementById("AdminName").value.trim() && adminAccNo == document.getElementById("AdminNo").value.trim()) {
         
         content.innerHTML =
-            `
+        `
         <div id="adminMainPage">
         <h2 id="adminHeading">Accounts</h2>
         <div id="AllAccounts">
@@ -656,12 +655,8 @@ createAccBtn.onclick = async (e) => {
 
 const adminLogin = document.getElementById("adminLogin");
 //const loginAccount = document.getElementById("loginAccount");
-document.getElementById("Adback").onclick = () => {
-    adminLogin.style.display = "none";
-    loginAccount.style.display = "block";
-}
-const adminOpenBtn = document.getElementById("admin");
-console.log(adminOpenBtn);
+
+
 const adminName = document.getElementById("adminName");
 const adminPass = document.getElementById("adminPassword");
 
@@ -678,8 +673,6 @@ const adminOpen = () => {
             //console.log("hello");
             adminLogin.style.display = "none";
             document.getElementById("adminPage").style.display = "block";
-            
-
         }
         else {
             document.getElementById("message").style.display = "block";
@@ -694,19 +687,12 @@ const adminOpen = () => {
     }
 }
 
-document.getElementById("adminLoginForm").onclick = (e) => {
+document.getElementById("AdminPageForm").onclick = (e) => {
     e.preventDefault();
-    
+   
 }
 
-document.getElementById("adminSubmit").onclick = (e) => {
-    if(adminAccNo.value == "adminName" && adminAccPass.value == "admin") 
-    e.preventDefault();
-    getCustomers();
-    console.log(Customers);
 
-
-}
 // Example usage
 
 

@@ -7,23 +7,7 @@ body {
     height:auto;
     width:auto;
     background-color: rgb(227, 232, 237);
-<<<<<<< HEAD
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-image: url("bg1.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-
-=======
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-/*     background-image: url('https://cdn.pixabay.com/photo/2017/01/06/19/15/bank-1951574_1280.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center; */
-    
->>>>>>> e5a34d0a26a2324af703f972bb9d2d6e92029464
 }
 #para {
     font-weight: bold;
@@ -101,7 +85,8 @@ label {
 }
 
 #heading{
-    color:rgb(255, 255, 255);
+    color:rgb(0, 21, 255);
+    
 }
 
 #submit {
@@ -310,7 +295,7 @@ label {
     display :none;
 }
 
-<<<<<<< HEAD
+
 #admin {
     font-weight:bold;
     font-size: 1.2em;
@@ -332,14 +317,14 @@ label {
 #adminPage {
     display: none;
     width: 100%;
-    min-height: 80vh;
+    min-height: 60%;
     height:auto;
 }
 
 #adminSubmit {
     padding:10px;
     background-color: rgb(255, 0, 132);
-=======
+}
 #APH {
     color:rgb(255, 0, 157);
     font-size:1.3em;
@@ -349,7 +334,7 @@ label {
 #AdminSubmit {
     padding:10px;
     background-color: rgb(255, 0, 157);
->>>>>>> e5a34d0a26a2324af703f972bb9d2d6e92029464
+    
     border:none;
     border-radius:10px;
     color:white;
@@ -357,7 +342,7 @@ label {
     font-weight: bold;
     cursor:pointer;
 }
-<<<<<<< HEAD
+
 #ALH {
     color:rgb(255, 0, 132);
     font-size:1.3em;
@@ -401,6 +386,7 @@ label {
 
 .Account {
     min-width:80%;
+    min-height:100px;
     width: auto;
     height:auto;
     background-color: rgb(0, 0, 0);
@@ -429,7 +415,8 @@ table th {
 
 #Accountcontainer #myh2 {
     color:rgb(255, 0, 132)
-=======
+}
+
 #adminpageOpenForLogin , #adminpageOpenForNewAcc {
     color:rgb(255, 0, 157);
     font-size:1.3em;
@@ -506,5 +493,5 @@ table th {
     font-size: 3em;
     font-weight: bold;
     color:rgb(255, 0, 157);
->>>>>>> e5a34d0a26a2324af703f972bb9d2d6e92029464
+
 }
