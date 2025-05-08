@@ -57,21 +57,22 @@ const container = document.getElementById("container");
 const AmountInput = document.getElementById("AmountInput");
 
 loginSubmit.onclick = (e) => {
-    let check = true;
-    e.preventDefault();
-    const accName = "Selva";
-    const accNo = 123456;
-    const accountName = document.getElementById("loginAccountName");
-    loginAccNo = document.getElementById("loginAccNo");
-    //console.log(accountName.value, loginAccNo.value);
-    //console.log(Customers);
-    for (let i = 0; i < COunt; i++) {
+    try {
+        let check = true;
+        e.preventDefault();
+        const accName = "Selva";
+        const accNo = 123456;
+        const accountName = document.getElementById("loginAccountName");
+        loginAccNo = document.getElementById("loginAccNo");
+        //console.log(accountName.value, loginAccNo.value);
+        //console.log(Customers);
+        for (let i = 0; i < COunt; i++) {
 
-        if (Customers[i].name == accountName.value.trim() && Customers[i].accountNumber == loginAccNo.value.trim()) {
-            check = false;
-            Amount = Customers[i].balance;
-            content.innerHTML = "";
-            content.innerHTML = `
+            if (Customers[i].name == accountName.value.trim() && Customers[i].accountNumber == loginAccNo.value.trim()) {
+                check = false;
+                Amount = Customers[i].balance;
+                content.innerHTML = "";
+                content.innerHTML = `
     <div id="mainPage">
         <h1 id="nameTag"></h1>
         <hr>
@@ -86,168 +87,173 @@ loginSubmit.onclick = (e) => {
             <h1 id="LogOut">LogOut</h1>
         </div>
     </div>`;
-            document.getElementById("LogOut").onclick = () => {
-                location.reload();
-            }
+                document.getElementById("LogOut").onclick = () => {
+                    location.reload();
+                }
 
-            document.getElementById("nameTag").innerHTML = `Account Holder ${accountName.value}`;
-            document.getElementById("para").style.display = "block";
+                document.getElementById("nameTag").innerHTML = `Account Holder ${accountName.value}`;
+                document.getElementById("para").style.display = "block";
 
-            document.getElementById("withdraw").onclick = () => {
-                //if is needed
-                popupForm.reset();
-                document.getElementById("transferRow").style.display = "none";
-                document.getElementById("transferRow2").style.display = "none";
-                AmountInput.disabled = false;
-                document.getElementById("save").style.display = "inline";
-                document.getElementById("mainpopup").style.display = "block";
-                document.getElementById("tableHead").textContent = "Withdraw";
-                document.getElementById("tableLabel").textContent = "Withdraw Amount:";
-                document.getElementById("historyrow").style.display = "none";
-                document.getElementById("historyGet").style.display = "none";
-                AmountInput.style.display = "inline";
-            }
+                document.getElementById("withdraw").onclick = () => {
+                    //if is needed
+                    popupForm.reset();
+                    document.getElementById("transferRow").style.display = "none";
+                    document.getElementById("transferRow2").style.display = "none";
+                    AmountInput.disabled = false;
+                    document.getElementById("save").style.display = "inline";
+                    document.getElementById("mainpopup").style.display = "block";
+                    document.getElementById("tableHead").textContent = "Withdraw";
+                    document.getElementById("tableLabel").textContent = "Withdraw Amount:";
+                    document.getElementById("historyrow").style.display = "none";
+                    document.getElementById("historyGet").style.display = "none";
+                    AmountInput.style.display = "inline";
+                }
 
-            document.getElementById("cancel").onclick = () => {
-                document.getElementById("mainpopup").style.display = "none";
-            }
-
-            document.getElementById("save").onclick = () => {
-
-                setTimeout(() => {
+                document.getElementById("cancel").onclick = () => {
                     document.getElementById("mainpopup").style.display = "none";
-                }, 100);
+                }
 
-                if (document.getElementById("tableHead").textContent == "Withdraw") {
-                    if (AmountInput.value > Amount) {
-                        document.getElementById("messageBox").textContent = "Insufficient Balance";
-                        document.getElementById("message").style.display = "block";
-                        setTimeout(() => {
-                            document.getElementById("message").style.display = "none";
-                        }, 3000)
-                        return;
+                document.getElementById("save").onclick = () => {
+
+                    setTimeout(() => {
+                        document.getElementById("mainpopup").style.display = "none";
+                    }, 100);
+
+                    if (document.getElementById("tableHead").textContent == "Withdraw") {
+                        if (AmountInput.value > Amount) {
+                            document.getElementById("messageBox").textContent = "Insufficient Balance";
+                            document.getElementById("message").style.display = "block";
+                            setTimeout(() => {
+                                document.getElementById("message").style.display = "none";
+                            }, 3000)
+                            return;
+                        }
+                        else {
+                            Amount -= Number(AmountInput.value);
+                            //console.log(AmountInput.value);
+                            //console.log(Amount);
+                            const updatedCustomer = {
+                                operation: "Withdraw",
+                                amount: Amount,
+                            };
+                            //console.log(updatedCustomer);
+                            updateCustomer(String(loginAccNo.value), updatedCustomer);
+                            document.getElementById("messageBox").textContent = "Amount Withdrawn Successfully";
+                            document.getElementById("message").style.display = "block";
+                            setTimeout(() => {
+                                document.getElementById("message").style.display = "none";
+                            }, 3000)
+                        }
+
                     }
-                    else {
-                        Amount -= Number(AmountInput.value);
-                        //console.log(AmountInput.value);
-                        //console.log(Amount);
+                    else if (document.getElementById("tableHead").textContent == "Deposit") {
+                        Amount += Number(AmountInput.value);
                         const updatedCustomer = {
-                            operation: "Withdraw",
+                            operation: "Deposit",
                             amount: Amount,
                         };
                         //console.log(updatedCustomer);
                         updateCustomer(String(loginAccNo.value), updatedCustomer);
-                        document.getElementById("messageBox").textContent = "Amount Withdrawn Successfully";
+
+                        document.getElementById("messageBox").textContent = "Amount Deposited Successfully";
                         document.getElementById("message").style.display = "block";
                         setTimeout(() => {
                             document.getElementById("message").style.display = "none";
                         }, 3000)
                     }
+                    else if (document.getElementById("tableHead").textContent == "Transfer") {
+                        const TransferAccName = document.getElementById("TransferAccName");
+                        const TransferAccNo = document.getElementById("TransferAccNo");
+                        const TransferAmt = document.getElementById("AmountInput");
+                        TransferAmount(TransferAccName.value, TransferAccNo.value, Number(TransferAmt.value), accountName.value.trim(), loginAccNo.value.trim());
+                    }
 
                 }
-                else if (document.getElementById("tableHead").textContent == "Deposit") {
-                    Amount += Number(AmountInput.value);
-                    const updatedCustomer = {
-                        operation: "Deposit",
-                        amount: Amount,
-                    };
-                    //console.log(updatedCustomer);
-                    updateCustomer(String(loginAccNo.value), updatedCustomer);
 
-                    document.getElementById("messageBox").textContent = "Amount Deposited Successfully";
-                    document.getElementById("message").style.display = "block";
-                    setTimeout(() => {
-                        document.getElementById("message").style.display = "none";
-                    }, 3000)
-                }
-                else if (document.getElementById("tableHead").textContent == "Transfer") {
-                    const TransferAccName = document.getElementById("TransferAccName");
-                    const TransferAccNo = document.getElementById("TransferAccNo");
-                    const TransferAmt = document.getElementById("AmountInput");
-                    TransferAmount(TransferAccName.value, TransferAccNo.value, Number(TransferAmt.value), accountName.value.trim(), loginAccNo.value.trim());
+                document.getElementById("deposit").onclick = () => {
+                    popupForm.reset();
+                    document.getElementById("transferRow").style.display = "none";
+                    document.getElementById("transferRow2").style.display = "none";
+                    AmountInput.disabled = false;
+                    document.getElementById("save").style.display = "inline";
+
+                    document.getElementById("mainpopup").style.display = "block";
+                    document.getElementById("tableHead").textContent = "Deposit";
+                    document.getElementById("tableLabel").textContent = "Deposit Amount:";
+                    document.getElementById("historyrow").style.display = "none";
+                    document.getElementById("historyGet").style.display = "none";
+                    AmountInput.style.display = "inline";
                 }
 
-            }
+                const CheckBalance = document.getElementById("CheckBalance");
+                CheckBalance.onclick = () => {
+                    popupForm.reset();
+                    document.getElementById("transferRow").style.display = "none";
+                    document.getElementById("transferRow2").style.display = "none";
+                    document.getElementById("mainpopup").style.display = "block";
+                    document.getElementById("tableHead").textContent = "Balance";
+                    document.getElementById("tableLabel").textContent = "Your Balance is:";
+                    AmountInput.value = Amount;
+                    AmountInput.disabled = true;
+                    document.getElementById("save").style.display = "inline";
+                    document.getElementById("historyrow").style.display = "none";
+                    AmountInput.style.display = "inline";
+                    document.getElementById("historyGet").style.display = "none";
+                }
 
-            document.getElementById("deposit").onclick = () => {
-                popupForm.reset();
-                document.getElementById("transferRow").style.display = "none";
-                document.getElementById("transferRow2").style.display = "none";
-                AmountInput.disabled = false;
-                document.getElementById("save").style.display = "inline";
+                const transfer = document.getElementById("transfer");
+                transfer.onclick = () => {
 
-                document.getElementById("mainpopup").style.display = "block";
-                document.getElementById("tableHead").textContent = "Deposit";
-                document.getElementById("tableLabel").textContent = "Deposit Amount:";
-                document.getElementById("historyrow").style.display = "none";
-                document.getElementById("historyGet").style.display = "none";
-                AmountInput.style.display = "inline";
-            }
+                    popupForm.reset();
+                    document.getElementById("transferRow").style.display = "inline";
+                    document.getElementById("transferRow2").style.display = "inline";
+                    document.getElementById("withdrawRow").style.display = "inline";
+                    document.getElementById("mainpopup").style.display = "block";
+                    document.getElementById("tableHead").textContent = "Transfer";
+                    document.getElementById("tableLabel").textContent = "Transfer Amount:";
+                    AmountInput.disabled = false;
+                    AmountInput.style.display = "inline";
+                    document.getElementById("save").style.display = "inline";
+                    document.getElementById("historyrow").style.display = "none";
+                    document.getElementById("historyGet").style.display = "none";
 
-            const CheckBalance = document.getElementById("CheckBalance");
-            CheckBalance.onclick = () => {
-                popupForm.reset();
-                document.getElementById("transferRow").style.display = "none";
-                document.getElementById("transferRow2").style.display = "none";
-                document.getElementById("mainpopup").style.display = "block";
-                document.getElementById("tableHead").textContent = "Balance";
-                document.getElementById("tableLabel").textContent = "Your Balance is:";
-                AmountInput.value = Amount;
-                AmountInput.disabled = true;
-                document.getElementById("save").style.display = "inline";
-                document.getElementById("historyrow").style.display = "none";
-                AmountInput.style.display = "inline";
-                document.getElementById("historyGet").style.display = "none";
-            }
+                }
 
-            const transfer = document.getElementById("transfer");
-            transfer.onclick = () => {
+                const history = document.getElementById("history");
+                history.onclick = () => {
+                    popupForm.reset();
 
-                popupForm.reset();
-                document.getElementById("transferRow").style.display = "inline";
-                document.getElementById("transferRow2").style.display = "inline";
-                document.getElementById("withdrawRow").style.display = "inline";
-                document.getElementById("mainpopup").style.display = "block";
-                document.getElementById("tableHead").textContent = "Transfer";
-                document.getElementById("tableLabel").textContent = "Transfer Amount:";
-                AmountInput.disabled = false;
-                AmountInput.style.display = "inline";
-                document.getElementById("save").style.display = "inline";
-                document.getElementById("historyrow").style.display = "none";
-                document.getElementById("historyGet").style.display = "none";
+                    document.getElementById("transferRow").style.display = "none";
+                    document.getElementById("transferRow2").style.display = "none";
+                    document.getElementById("mainpopup").style.display = "block";
+                    document.getElementById("tableHead").textContent = "History";
+                    document.getElementById("tableLabel").textContent = "History:";
+                    document.getElementById("withdrawRow").style.display = "inline";
+                    AmountInput.style.display = "none";
+                    document.getElementById("historyrow").style.display = "inline";
 
-            }
+                    //document.getElementById("historyDiv").textContent = "receiverName : Selva \n transition amount : 1000 \n Date : 12/10/2023 \n";
+                    document.getElementById("save").style.display = "none";
+                    document.getElementById("historyGet").style.display = "inline";
 
-            const history = document.getElementById("history");
-            history.onclick = () => {
-                popupForm.reset();
-
-                document.getElementById("transferRow").style.display = "none";
-                document.getElementById("transferRow2").style.display = "none";
-                document.getElementById("mainpopup").style.display = "block";
-                document.getElementById("tableHead").textContent = "History";
-                document.getElementById("tableLabel").textContent = "History:";
-                document.getElementById("withdrawRow").style.display = "inline";
-                AmountInput.style.display = "none";
-                document.getElementById("historyrow").style.display = "inline";
-
-                //document.getElementById("historyDiv").textContent = "receiverName : Selva \n transition amount : 1000 \n Date : 12/10/2023 \n";
-                document.getElementById("save").style.display = "none";
-                document.getElementById("historyGet").style.display = "inline";
+                }
 
             }
+        }
+        if (check) {
+            document.getElementById("message").style.display = "block";
+            document.getElementById("messageBox").textContent = "No Account Found";
+            document.getElementById("message").style.backgroundColor = "red";
+            setTimeout(() => {
+                document.getElementById("message").style.display = "none";
+                document.getElementById("message").style.backgroundColor = "rgb(0, 255, 17)";
 
+            }, 2000);
         }
     }
-    if (check) {
-        document.getElementById("message").style.display = "block";
-        document.getElementById("messageBox").textContent = "No Account Found";
-        document.getElementById("message").style.backgroundColor = "red";
-        setTimeout(() => {
-            document.getElementById("message").style.display = "none";
-            document.getElementById("message").style.backgroundColor = "rgb(0, 255, 17)";
 
-        }, 2000);
+    catch (error) {
+        console.log(error);
     }
 }
 
@@ -257,35 +263,40 @@ const HistoryDiv = document.getElementById("historyDiv");
 let repeat = true;
 
 getHistory.onclick = async () => {
-    if (repeat) {
-        repeat = false;
-        await getCustomer(loginAccNo.value.trim());
-        if (response.ok) {
-            setTimeout(() => {
-                //console.log(TransactionHistory);
-                TransactionHistory.forEach((transaction) => {
-                    const transactionDiv = document.createElement("div");
-                    //transactionDiv.classList.add("transaction");
-                    transactionDiv.innerHTML = `
+    try {
+        if (repeat) {
+            repeat = false;
+            await getCustomer(loginAccNo.value.trim());
+            if (response.ok) {
+                setTimeout(() => {
+                    //console.log(TransactionHistory);
+                    TransactionHistory.forEach((transaction) => {
+                        const transactionDiv = document.createElement("div");
+                        //transactionDiv.classList.add("transaction");
+                        transactionDiv.innerHTML = `
             <p>Type: ${transaction.type}</p>
             <p>Amount: ${transaction.amount}</p>
             <p>Date: ${new Date(transaction.date).toLocaleString()}</p>
             <hr>
         `;
-                    HistoryDiv.appendChild(transactionDiv);
-                })
-            }, 2000);
-        }
-        else {
-            document.getElementById("message").style.display = "block";
-            document.getElementById("messageBox").textContent = "No Transaction History Found";
-            document.getElementById("message").style.backgroundColor = "red";
-            setTimeout(() => {
-                document.getElementById("message").style.display = "none";
-                document.getElementById("message").style.backgroundColor = "rgb(0, 255, 17)";
+                        HistoryDiv.appendChild(transactionDiv);
+                    })
+                }, 2000);
+            }
+            else {
+                document.getElementById("message").style.display = "block";
+                document.getElementById("messageBox").textContent = "No Transaction History Found";
+                document.getElementById("message").style.backgroundColor = "red";
+                setTimeout(() => {
+                    document.getElementById("message").style.display = "none";
+                    document.getElementById("message").style.backgroundColor = "rgb(0, 255, 17)";
 
-            }, 2000);
+                }, 2000);
+            }
         }
+    }
+    catch (e) {
+        console.log(e);
     }
 }
 
@@ -327,36 +338,44 @@ document.getElementById("AdminSubmit").onclick = async (e) => {
     const adminName = "Admin";
     const adminAccNo = 1234;
     if (adminName == document.getElementById("AdminName").value.trim() && adminAccNo == document.getElementById("AdminNo").value.trim()) {
-        
+
         content.innerHTML =
-        `
+            `
         <div id="adminMainPage">
         <h2 id="adminHeading">Accounts</h2>
         <div id="AllAccounts">
-
+        <h1 id="adminInformation" style="display:none">No Accounts Found</h1>
         </div>
-    </div>
-    `;
-    await getCustomers();
-    console.log(Customers);
-    e.preventDefault();
-    for (let i = 0; i < Customers.length; i++) {
-        const customer = Customers[i];
-        //console.log(customer.name, customer.accountNumber, customer.balance);
-        const accountDiv = document.createElement("div");
-        accountDiv.classList.add("account");
-        accountDiv.innerHTML = `
-            <label class="label">Name:</label>
-            <h2 id="Name">${customer.name}</h2><br>
-            <label class="label">Account No:</label>
-            <h2 id="AccNo">${customer.accountNumber}</h2><br>
-            <label class="label">Balance:</label>
-            <h2 id="Balance">${customer.balance}</h2><br>
-            <button id="DeleteBtn" onclick="deleteFunction(event)">Delete</button>
+        </div>
         `;
-        const allAccountsDiv = document.getElementById("AllAccounts");
-        allAccountsDiv.appendChild(accountDiv);
-    }
+        await getCustomers();
+        console.log(Customers);
+        e.preventDefault();
+        if (Customers.length > 0) {
+            const allAccountsDiv = document.getElementById("AllAccounts");
+            for (let i = 0; i < Customers.length; i++) {
+                const customer = Customers[i];
+                //console.log(customer.name, customer.accountNumber, customer.balance);
+                const accountDiv = document.createElement("div");
+                accountDiv.classList.add("account");
+                accountDiv.innerHTML = `
+               <label class="label">Name:</label>
+               <h2 id="Name">${customer.name}</h2><br>
+               <label class="label">Account No:</label>
+               <h2 id="AccNo">${customer.accountNumber}</h2><br>
+               <label class="label">Balance:</label>
+               <h2 id="Balance">${customer.balance}</h2><br>
+               <button id="DeleteBtn" onclick="deleteFunction(event)">Delete</button>
+               `;
+
+                allAccountsDiv.appendChild(accountDiv);
+            }
+        }
+        else {
+            const adminInformation = document.getElementById("adminInformation");
+            adminInformation.style.display = "block";
+        }
+
     }
     else {
         document.getElementById("message").style.display = "block";
@@ -689,7 +708,7 @@ const adminOpen = () => {
 
 document.getElementById("AdminPageForm").onclick = (e) => {
     e.preventDefault();
-   
+
 }
 
 
